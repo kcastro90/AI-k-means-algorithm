@@ -20,12 +20,13 @@ try:
     print (elements)
 
     print ("\n THIS WILL BE THE DATA TB BE USED (it excludes the 12 column labels):\n")
-    stats = elements[11::]
+    stats = elements[1::]
     print (stats)
-    
-        #(random.choice(stats))  # Choose a random element
+
+    dimensions = len(stats) * 11
+    #20 rows 11 columns in example; dimension 220
 finally:
     csvfile.close()
 
-  
+
 
