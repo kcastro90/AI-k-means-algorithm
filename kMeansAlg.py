@@ -1,7 +1,7 @@
 __author__ = 'karic_000'
 import random
 import csv
-
+#import numpy as np
 
 csv_file = open('simple-soccer-database.csv', 'rt')
 elements = []
@@ -23,20 +23,30 @@ try:
     print(stats)
 
     rowAmount = len(stats)
-    dimensions = rowAmount * 11
-    # 20 rows 11 columns
-    # print(stats[0][1]) 31
+    colAmount = 11
+    dimensions = rowAmount * colAmount  # 20 rows 11 columns in this example
+    cluster = [[] for i in range(4)]    # Create 5 empty clusters
 
-    # Create 5 clusters
-    clusters = [[] for i in range(4)]
+    # ClusterListSize defines how many rows from "stats" can each cluster have
+    clusterListSize = rowAmount//5
 
+    random_choice1 = random.sample(stats, clusterListSize)
+    print(random_choice1)
+    
+    """NOW I'M TRYING TO ASSIGN A random_choice LIST OF ROWS TO EACH OF THE 5 CLUSTERS
+    WITHOUT REPEATING ANY OF THE ROWS
+    BEYOND THIS POINT IT'S ALL IRRELEVANT AT THIS STAGE"""
+
+    
+    # randOberservation = np.random.randint(dimensions, size=(rowAmount,colAmount))
     # Assign each observation/element to a random cluster
     # Loop over all observations
-    for observation in stats:
+    """for observation in stats:
         clusterIndex = random.choice(clusters)
-        cluster = clusters[clusterIndex]
-        cluster.append(observation)
-        print(clusters)
+        # cluster = clusters[clusterIndex]
+        # cluster.append(observation)
+        clusters[clusterIndex].append(observation)
+        print(clusters)"""
 
     # done = False
     # while not done
