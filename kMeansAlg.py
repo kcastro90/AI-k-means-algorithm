@@ -23,12 +23,7 @@ def start():
         dimensions = row_amount * col_amount  # The amount of elemets in the data.
         print('\nThe number of total elements:', dimensions)
 
-        # clusters = [[] for i in range(4)]    # Creates 5 empty clusters
-        cluster_1 = []
-        cluster_2 = []
-        cluster_3 = []
-        cluster_4 = []
-        cluster_5 = []
+        cluster_1, cluster_2, cluster_3, cluster_4, cluster_5 = [], [], [], [], []
 
         cluster_list_size = row_amount//5  # Defines how many rows from "stats" can each cluster have.
         print("\nEach cluster should have this many rows put into them:", cluster_list_size)
@@ -58,29 +53,12 @@ def start():
                     done = True
                 if index <= 18:
                     index += 1  # To loop through every row (list in cluster)
-
-
         print("\nCluster 1:", cluster_1)
         print("\nCluster 2:", cluster_2)
         print("\nCluster 3:", cluster_3)
         print("\nCluster 4:", cluster_4)
         print("\nCluster 5:", cluster_5)
 
-#def cluster_pick(x):
-    #if x == 0:
-        #cluster = cluster_one
-
-        # def centroids(lst)
-        # mean = sum(lst) / n
-        # return mean"""
-  
-            # if (source not cluster && source.length > 1):
-                # sourceObservationIndex = rndInt(source.length)
-                # sourceObservation = source[sourceObservationIndex]
-                # source.remove(sourceObservationIndex)
-                # cluster.add(sourceObservation)
-                # done = True
-        # updateStep()
     finally:
         csv_file.close()
 
