@@ -33,28 +33,38 @@ def start():
         cluster_list_size = row_amount//5  # Defines how many rows from "stats" can each cluster have.
         print("\nEach cluster should have this many rows put into them:", cluster_list_size)
 
+        done = False
         index = 0
-        for i in range(0,5):   # There are 5 clusters .: Loop through them from 0-4
-            observation = stats[index]
-            print("\nObservation:", observation)
-            x = random.randint(0,4)   # Random cluster takes the next observation
-            print("Cluster's index:", x)
-            #cluster_pick()
-            if x == 0:
-                cluster_1.append(observation)
-            if x == 1:
-                cluster_2.append(observation)
-            if x == 0:
-                cluster_3.append(observation)
-            if x == 1:
-                cluster_4.append(observation)
-            if x == 0:
-                cluster_5.append(observation)
+        while not done:
+            if index <= row_amount: # 0 - 20 in this example
+                print("\nRow index:", index)
+                observation = stats[index]
+                print("Observation:", observation)
+                x = random.randint(0,4)   # Random cluster takes the next observation
+                # print("Cluster's index:", x)
+                # 5 Clusters options.
+                if x == 0:
+                    cluster_1.append(observation)
+                if x == 1:
+                    cluster_2.append(observation)
+                if x == 0:
+                    cluster_3.append(observation)
+                if x == 1:
+                    cluster_4.append(observation)
+                if x == 0:
+                    cluster_5.append(observation)
                 # if len(clusters) <= :    # If cluster is full
-                print("\nNewly changed cluster:")
-                print(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
-                index += 1  # To loop through every row (list in cluster)
-        print(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
+                if index == 19:
+                    done = True
+                if index <= 18:
+                    index += 1  # To loop through every row (list in cluster)
+
+
+        print("\nCluster 1:", cluster_1)
+        print("\nCluster 2:", cluster_2)
+        print("\nCluster 3:", cluster_3)
+        print("\nCluster 4:", cluster_4)
+        print("\nCluster 5:", cluster_5)
 
 #def cluster_pick(x):
     #if x == 0:
@@ -63,14 +73,7 @@ def start():
         # def centroids(lst)
         # mean = sum(lst) / n
         # return mean"""
-
-        # Assign each observation/element to a random cluster
-        # Loop over all observations
-
-        # done = False
-        # while not done
-            # sourceIndex = ranInt(K)
-            # source = clusters[sourceIndex]
+  
             # if (source not cluster && source.length > 1):
                 # sourceObservationIndex = rndInt(source.length)
                 # sourceObservation = source[sourceObservationIndex]
