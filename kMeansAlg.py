@@ -9,30 +9,29 @@ stats = []
 try:
     reader = csv.reader(csv_file)
     next(reader)    # Skip headers.
-    ints = [[int(item) for number, item in enumerate(row) if item and (1 <= number <=12)] for row in reader]
-    print(ints)
-    
-    print("\n THIS WILL BE THE OUTPUT WITHOUT INCLUDING THE FIRST COLUMN:\n")
-    for col in reader:
-        print(col[1::])
-        # omit first COLUMN
-        elements.append(col[1::])   # THIS WILL BE THE ARRAY OF ELEMENTS (including column label)
-
-    print("\n THIS WILL BE THE DATA TO BE USED (it excludes the 12 column labels):\n")
-    stats = elements[1::]
+    stats = [[int(item) for number, item in enumerate(row) if
+              item and (1 <= number <= 100)] for row in reader]
+              # Converts list of strings into integers
+    """The maximum number of rows for this program is 100"""
+    print("\nDATA RETRIEVED:\n" )
     print(stats)
 
     rowAmount = len(stats)
+    print("\nROW AMOUNT:")
+    print(rowAmount)
     colAmount = 11
+    print("\nThe number of columns were -decided- to be static; so 11 it is.\n")
     dimensions = rowAmount * colAmount  # 20 rows 11 columns in this example
-    sums = stats[0][0] + stats[0][1]
-    #print(sums)
+    print('\nThe number of total elements:')
+    print(dimensions)
+
+
     cluster = [[] for i in range(4)]    # Creates 5 empty clusters
     # clusters = [], [], [], [], []
 
     # ClusterListSize defines how many rows from "stats" can each cluster have
     clusterListSize = rowAmount//5
-    print("\nEach cluster should have this many rows:")
+    print("\nEach cluster should have this many rows put into them:")
     print(clusterListSize)
 
     index = 0
@@ -48,11 +47,9 @@ try:
     print(stats)
 
 
-    #MAKE STRINGS INTO INTEGERS
-
-    """def centroids(lst)
-    mean = sum(lst) / n
-    return mean"""
+    # def centroids(lst)
+    # mean = sum(lst) / n
+    # return mean"""
 
 
     # Assign each observation/element to a random cluster
