@@ -36,17 +36,17 @@ def start():
                 observation = stats[index]
                 print("Observation:", observation)
                 x = random.randint(0,4)   # Random cluster takes the next observation
-                # print("Cluster's index:", x)
+                print("Cluster's index:", x)
                 # 5 Clusters options.
                 if x == 0:
                     cluster_1.append(observation)
                 if x == 1:
                     cluster_2.append(observation)
-                if x == 0:
+                if x == 2:
                     cluster_3.append(observation)
-                if x == 1:
+                if x == 3:
                     cluster_4.append(observation)
-                if x == 0:
+                if x == 4:
                     cluster_5.append(observation)
                 # if len(clusters) <= :    # If cluster is full
                 if index == 19:
@@ -59,6 +59,27 @@ def start():
         print("\nCluster 4:", cluster_4)
         print("\nCluster 5:", cluster_5)
 
+# Check cluster size
+# full = True
+# if len(cluster) < 5:
+        #
+# while not full
+
+#def cluster_pick(x):
+    #if x == 0:
+        #cluster = cluster_one
+
+        # def centroids(lst)
+        # mean = sum(lst) / n
+        # return mean"""
+
+            # if (source not cluster && source.length > 1):
+                # sourceObservationIndex = rndInt(source.length)
+                # sourceObservation = source[sourceObservationIndex]
+                # source.remove(sourceObservationIndex)
+                # cluster.add(sourceObservation)
+                # done = True
+        # updateStep()
     finally:
         csv_file.close()
 
