@@ -10,32 +10,31 @@ def start():
     try:
         reader = csv.reader(csv_file)
         next(reader)    # Skip headers.
-        stats = [[int(item) for number, item in enumerate(row) if
-                item and (1 <= number <= 100)] for row in reader]
-                # Converts list of strings into integers
+        stats = [[int(item) for number, item in enumerate(row) if item and (1 <= number <= 100)] 
+                 for row in reader]   # Converts string into int
         """The maximum number of rows for this program is 100"""
         print("\nDATA RETRIEVED:\n", stats)
 
         row_amount = len(stats)
-        print("\nROW AMOUNT:",row_amount)
+        print("\nROW AMOUNT:", row_amount)
         col_amount = 11
         print("\nThe number of columns were -decided- to be static; so 11 it is.\n")
-        dimensions = row_amount * col_amount  # The amount of elemets in the data.
+        dimensions = row_amount * col_amount  # The amount of elements in the data.
         print('\nThe number of total elements:', dimensions)
 
         cluster_1, cluster_2, cluster_3, cluster_4, cluster_5 = [], [], [], [], []
 
-        cluster_list_size = row_amount//5  # Defines how many rows from "stats" can each cluster have.
+        cluster_list_size = row_amount//5  # Defines how many rows can each cluster have.
         print("\nEach cluster should have this many rows put into them:", cluster_list_size)
 
         done = False
         index = 0
         while not done:
-            if index <= row_amount: # 0 - 20 in this example
+            if index <= row_amount:  # 0 - 20 in this example
                 print("\nRow index:", index)
                 observation = stats[index]
                 print("Observation:", observation)
-                x = random.randint(0,4)   # Random cluster takes the next observation
+                x = random.randint(0, 4)   # Random cluster takes the next observation
                 print("Cluster's index:", x)
                 # 5 Clusters options.
                 if x == 0:
@@ -59,27 +58,6 @@ def start():
         print("\nCluster 4:", cluster_4)
         print("\nCluster 5:", cluster_5)
 
-# Check cluster size
-# full = True
-# if len(cluster) < 5:
-        #
-# while not full
-
-#def cluster_pick(x):
-    #if x == 0:
-        #cluster = cluster_one
-
-        # def centroids(lst)
-        # mean = sum(lst) / n
-        # return mean"""
-
-            # if (source not cluster && source.length > 1):
-                # sourceObservationIndex = rndInt(source.length)
-                # sourceObservation = source[sourceObservationIndex]
-                # source.remove(sourceObservationIndex)
-                # cluster.add(sourceObservation)
-                # done = True
-        # updateStep()
     finally:
         csv_file.close()
 
