@@ -37,27 +37,43 @@ def start():
                 x = random.randint(0, 4)   # Random cluster takes the next observation
                 print("Cluster's index:", x)
                 if index < 20:  # When index hits the last item 19,
-                    # it increments til 20, but doesn' include it, then it halts
+                    # it increments til 20, but doesn't include it, then it halts
                     # 5 Clusters options.
                     if x == 0:
-                        cluster_1.append(observation)
-                        index += 1
+                        if len(cluster_1) < cluster_list_size:
+                            cluster_1.append(observation)
+                            # Only increments if that row is used
+                            index += 1
+                        else:
+                            # Pick a new random cluster
+                            x = random.randint(1,4)
                     if x == 1:
-                        cluster_2.append(observation)
-                        index += 1
+                        if len(cluster_2) < cluster_list_size:
+                            cluster_2.append(observation)
+                            index += 1
+                        else:
+                            x = random.randint(0,4)
                     if x == 2:
-                        cluster_3.append(observation)
-                        index += 1
+                        if len(cluster_3) < cluster_list_size:
+                            cluster_3.append(observation)
+                            index += 1
+                        else:
+                            x = random.randint(0,4)
                     if x == 3:
-                        cluster_4.append(observation)
-                        index += 1
+                        if len(cluster_4) < cluster_list_size:
+                            cluster_4.append(observation)
+                            index += 1
+                        else:
+                            x = random.randint(0,4)
                     if x == 4:
-                        cluster_5.append(observation)
-                        index += 1
-                    # if len(clusters) <= :    # If cluster is full
+                        if len(cluster_5) < cluster_list_size:
+                            cluster_5.append(observation)
+                            index += 1
+                        else:
+                            x = random.randint(0,4)
                 if index == 20:
                     done = True
-                    
+
         print("\nCluster 1:", cluster_1)
         print("\nCluster 2:", cluster_2)
         print("\nCluster 3:", cluster_3)
