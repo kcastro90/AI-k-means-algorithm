@@ -73,7 +73,6 @@ def start():
                             x = random.randint(0,4)
                 if index == 20:
                     done = True
-
         print("\nCluster 1:", cluster_1)
         print("\nCluster 2:", cluster_2)
         print("\nCluster 3:", cluster_3)
