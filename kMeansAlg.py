@@ -1,3 +1,5 @@
+"""By Karina Castro
+   This is one way to make a random k-means algorithm"""
 __author__ = 'karic_000'
 import random
 import csv
@@ -85,15 +87,62 @@ def assignment_step(stats, row_amount, cluster_1, cluster_2, cluster_3, cluster_
 
         update_centroids(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 
-        """done = False
+        done = False
+        iteration = 0
+        # Will keep track of the cluster in "clusters" index
+        # It will also be the clusters' index that needs an element
+
         while not done:
-            for cluster in clusters:
-                if len(cluster) == 0:
-                    x = random.randint(0,4)
+            for cluster in clusters:    # Search to see if any cluster was left empty
+                if len(cluster) == 0:   # If an empty one is found
+                    print("iteration", iteration)
+                    which_cluster = random.randint(0, 4)
+                    print("Which cluster:", which_cluster)
+                    # Randomly picks a new cluster index
+                    giving_cluster = clusters[which_cluster]
+                    print("Giving cluster:", giving_cluster)
+                    # Checks if cluster that is going to give a row is not this empty one
+                    if (cluster != giving_cluster) and (len(giving_cluster) > 1):
+                        # Row index from cluster
+                        index_for_row = random.randint(0, len(giving_cluster))
+                        print("Which row index from cluster:", index_for_row)
+                        new_row_elements = giving_cluster[index_for_row]  # Row that is being taken
+                        print("New row's elements", new_row_elements)
+                        # Find and assign clusters
 
-                done = True
-                print(done)"""
+                        # Cluster being added options
+                        if iteration == 0:
+                            cluster_1.append(new_row_elements)
+                        if iteration == 1:
+                            cluster_2.append(new_row_elements)
+                        if iteration == 2:
+                            cluster_3.append(new_row_elements)
+                        if iteration == 3:
+                            cluster_4.append(new_row_elements)
+                        if iteration == 4:
+                            cluster_5.append(new_row_elements)
+                        print(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 
+
+                        if which_cluster == 0:
+                            cluster_1.remove(index_for_row)
+                        if which_cluster == 1:
+                            cluster_2.remove(index_for_row)
+                        if which_cluster == 2:
+                            cluster_3.remove(index_for_row)
+                        if which_cluster == 3:
+                            cluster_4.remove(index_for_row)
+                        if which_cluster == 4:
+                            cluster_5.remove(index_for_row)
+                    # Cluster that is losing a row
+                    iteration += 1  # There are only 5 clusters so it won't go beyond scope
+            print("\nCluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:",
+                  cluster_3, "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
+
+            done = True
+
+        # After no empty clusters are left update the centroids
+        update_centroids(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 
 
 def update_centroids(c_1, c_2, c_3, c_4, c_5):
@@ -134,9 +183,7 @@ def update_centroids(c_1, c_2, c_3, c_4, c_5):
             centroid = [sum(c_5[index])/(len(c_5[0]))]
             centroid_5cluster.append(centroid)
             index += 1
-        index = 0   # Reset index to 0
         print("The centroids for Cluster 5:", centroid_5cluster)
 
 
 initialization()
-
