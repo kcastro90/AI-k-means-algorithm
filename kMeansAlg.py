@@ -69,10 +69,9 @@ def start():
                         if len(cluster_5) < cluster_list_size:
                             cluster_5.append(observation)
                             index += 1
-                        else:
-                            x = random.randint(0,4)
                 if index == 20:
                     done = True
+                    
         print("\nCluster 1:", cluster_1)
         print("\nCluster 2:", cluster_2)
         print("\nCluster 3:", cluster_3)
