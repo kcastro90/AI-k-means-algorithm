@@ -3,7 +3,7 @@ import random
 import csv
 
 
-def start():
+def initialization():
 
     csv_file = open('simple-soccer-database.csv', 'rt')
 
@@ -21,8 +21,14 @@ def start():
         print("\nThe number of columns were -decided- to be static; so 11 it is.")
         dimensions = row_amount * col_amount  # The amount of elements in the data.
         print('\nThe number of total elements:', dimensions)
+        assignment_step(stats, row_amount)
+    finally:
+        csv_file.close()
 
+
+def assignment_step(stats, row_amount):
         cluster_1, cluster_2, cluster_3, cluster_4, cluster_5 = [], [], [], [], []
+        clusters = [cluster_1, cluster_2, cluster_3, cluster_4, cluster_5]
 
         cluster_list_size = row_amount//5  # Defines how many rows can each cluster have.
         print("\nEach cluster should have this many rows put into them:", cluster_list_size)
@@ -69,15 +75,64 @@ def start():
 
                 if index == row_amount:
                     done = True
+        print("\nCluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:", cluster_3,
+              "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
 
-        print("\nCluster 1:", cluster_1)
-        print("\nCluster 2:", cluster_2)
-        print("\nCluster 3:", cluster_3)
-        print("\nCluster 4:", cluster_4)
-        print("\nCluster 5:", cluster_5)
+        """
+        empty_cluster_index = ""
+        count = 0
+        full = False
+        for cluster in clusters:
+            if cluster == 0:
+                empty_cluster_index = count
+            else:
+                count += 1
+            print(empty_cluster_index)"""
 
-    finally:
-        csv_file.close()
+        update_centroids(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 
-start()
+
+def update_centroids(c_1, c_2, c_3, c_4, c_5):
+    centroid_1cluster, centroid_2cluster, centroid_3cluster, centroid_4cluster, \
+        centroid_5cluster = [], [], [], [], []
+    index = 0
+
+    # Makes sure no cluster is empty before beginning the update step.
+    if len(c_1) or len(c_2) or len(c_3) or len(c_4) or len(c_5) != 0:
+        # Check if any of the clusters are empty.
+        # print("Length for each cluster:",len(c_1), len(c_2), len(c_3), len(c_4), len(c_5))
+
+        while index < len(c_1):
+            centroid = [sum(c_1[index])/(len(c_1[0]))]
+            centroid_1cluster.append(centroid)
+            index += 1
+        index = 0
+        print("\nThe centroids for Cluster 1:", centroid_1cluster)
+        while index < len(c_2):
+            centroid = [sum(c_2[index])/(len(c_2[0]))]
+            centroid_2cluster.append(centroid)
+            index += 1
+        index = 0   # Reset index to 0
+        print("The centroids for Cluster 2:", centroid_2cluster)
+        while index < len(c_3):
+            centroid = [sum(c_3[index])/(len(c_3[0]))]
+            centroid_3cluster.append(centroid)
+            index += 1
+        index = 0   # Reset index to 0
+        print("The centroids for Cluster 3:", centroid_3cluster)
+        while index < len(c_4):
+            centroid = [sum(c_4[index])/(len(c_4[0]))]
+            centroid_4cluster.append(centroid)
+            index += 1
+        index = 0   # Reset index to 0
+        print("The centroids for Cluster 4:", centroid_4cluster)
+        while index < len(c_5):
+            centroid = [sum(c_5[index])/(len(c_5[0]))]
+            centroid_5cluster.append(centroid)
+            index += 1
+        index = 0   # Reset index to 0
+        print("The centroids for Cluster 5:", centroid_5cluster)
+
+
+initialization()
 
