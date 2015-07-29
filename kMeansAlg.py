@@ -1,5 +1,3 @@
-"""By Karina Castro
-   This is one way to make a random k-means algorithm"""
 __author__ = 'karic_000'
 import random
 import csv
@@ -21,6 +19,7 @@ def initialization():
         print("\nROW AMOUNT:", row_amount)
         col_amount = 11
         print("\nThe number of columns were -decided- to be static; so 11 it is.")
+        """If columns were unknown, 2 nested for loops could have given that number"""
         dimensions = row_amount * col_amount  # The amount of elements in the data.
         print('\nThe number of total elements:', dimensions)
 
@@ -92,7 +91,7 @@ def assignment_step(stats, row_amount, cluster_1, cluster_2, cluster_3, cluster_
         # Will keep track of the cluster in "clusters" index
         # It will also be the clusters' index that needs an element
 
-        while not done:
+        while done:
             for cluster in clusters:    # Search to see if any cluster was left empty
                 if len(cluster) == 0:   # If an empty one is found
                     print("iteration", iteration)
@@ -123,8 +122,7 @@ def assignment_step(stats, row_amount, cluster_1, cluster_2, cluster_3, cluster_
                             cluster_5.append(new_row_elements)
                         print(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 
-
-                        if which_cluster == 0:
+                        if which_cluster == 4:
                             cluster_1.remove(index_for_row)
                         if which_cluster == 1:
                             cluster_2.remove(index_for_row)
@@ -134,12 +132,24 @@ def assignment_step(stats, row_amount, cluster_1, cluster_2, cluster_3, cluster_
                             cluster_4.remove(index_for_row)
                         if which_cluster == 4:
                             cluster_5.remove(index_for_row)
+
+                            """if which_cluster == 4:
+                            del cluster_1[index_for_row]
+                        if which_cluster == 1:
+                            del cluster_2[index_for_row]
+                        if which_cluster == 2:
+                            del cluster_3[index_for_row]
+                        if which_cluster == 3:
+                            del cluster_4[index_for_row]
+                        if which_cluster == 4:
+                            del cluster_5[index_for_row]
+                            THIS COULD WORK TOO."""
                     # Cluster that is losing a row
                     iteration += 1  # There are only 5 clusters so it won't go beyond scope
-            print("\nCluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:",
-                  cluster_3, "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
-
-            done = True
+                done = True
+        print("\nIf any clusters were updated, this print will show their modifications:\n\n"
+              "Cluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:",
+              cluster_3, "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
 
         # After no empty clusters are left update the centroids
         update_centroids(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
