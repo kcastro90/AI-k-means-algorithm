@@ -30,7 +30,7 @@ def initialization():
         cluster_1, cluster_2, cluster_3, cluster_4, cluster_5 = [], [], [], [], []
         clusters = [cluster_1, cluster_2, cluster_3, cluster_4, cluster_5]
 
-        cluster_list_size = row_amount//len(clusters)  # Defines how many rows can each cluster have.
+        cluster_list_size = row_amount//len(clusters)  # Defines how many rows can clusters hold 
         print("\nEach cluster should have this many rows put into them:", cluster_list_size)
 
         assignment_step(stats, row_amount, col_amount, cluster_1, cluster_2, cluster_3, cluster_4,
@@ -89,8 +89,10 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
 
         #update_centroids(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 
-        sum = 0
+        
         clust_index = 0 # Keeps rr
+        
+        sum = 0
         ind_i = 0  # every Nth element in a cluster's columns
         next_r = 0  # to keep the row number; 4 max
         limit = 0  # Keep track of "dimensions"
@@ -112,11 +114,8 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
                     ind_i += 1  # After very 4 checks, increase list index
         if next_r == cluster_list_size and limit == cluster_dimension:
             centroid = sum#/cluster_dimension 
-
             cent1.append(centroid)
-
-        print(limit)
-
+        limit = 0
         print(cent1)
 
         done = False
