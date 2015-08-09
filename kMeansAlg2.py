@@ -160,12 +160,15 @@ def update_step(clusters, centroids, col_amount, cluster_list_size):
                 for element in cluster_row:  # Sees one element at a time
                     print(element)
                     print("centroid element number", element_num)
-                    if element_num == col_amount:
-                        element_num = 0
+
                     if element_num < col_amount:
                         element_num += 1
                 #print(element_num)
                 element_num = 0  # Reset element number
+
+            if centroid_num < 4:
+                centroid_num += 1
+            print("Which centroids[] it is looking at", centroid_num)
 
             row_in_clust += 1  # Once all items are seen, change cluster
 
