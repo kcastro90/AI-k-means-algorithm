@@ -11,7 +11,7 @@ def initialization():
     try:
         reader = csv.reader(csv_file)
         next(reader)    # Skip headers.
-        stats = [[int(item) for number, item in enumerate(row) if item and (1 <= number <= 100)] 
+        stats = [[int(item) for number, item in enumerate(row) if item and (1 <= number <= 100)]
                  for row in reader]   # Converts string into int
         """The maximum number of rows for this program is 100"""
         print("\nDATA RETRIEVED:\n", stats)
@@ -92,22 +92,31 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
         sum = 0
         clust_index = 0 # Keeps rr
         ind_i = 0  # every Nth element in a cluster's columns
-        next_r = 0  # to keep the column number
+        next_r = 0  # to keep the row number; 4 max
         limit = 0  # Keep track of "dimensions"
-        cluster_dimension = cluster_list_size * col_amount
+        cluster_dimension = cluster_list_size * col_amount  # 44 elements
         cent1 = []
         for r in cluster_1:
             for c in r:
-                while next_r < cluster_list_size:  # Cluster size is 4 in this example
+                while next_r < cluster_list_size: # Cluster size is 4 in this example
                     sum += cluster_1[next_r][ind_i]
                     next_r += 1
                     limit += 1
-                    centroid = sum/cluster_dimension
+
+                if next_r == cluster_list_size and limit != cluster_dimension:
+                # limit's max will always be 1 less than cluster_dimensions
+                    centroid = sum#/cluster_dimension
                     cent1.append(centroid)
-                if next_r == (cluster_list_size+1) and limit != cluster_dimension:
                     sum = 0
                     next_r = 0  # Loop back through rows til every Nth elements find its centroid
-                    ind_i += 1
+                    ind_i += 1  # After very 4 checks, increase list index
+        if next_r == cluster_list_size and limit == cluster_dimension:
+            centroid = sum#/cluster_dimension 
+
+            cent1.append(centroid)
+
+        print(limit)
+
         print(cent1)
 
         done = False
