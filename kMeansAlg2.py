@@ -22,16 +22,15 @@ def initialization():
         for row in stats:
             for col in row:
                 dimensions += 1
-        print('\nThe number of total elements:', dimensions)
         col_amount = dimensions // row_amount
-        print("\nCOLUMN AMOUNT:", col_amount)
+        print("COLUMN AMOUNT:", col_amount, '\nThe number of total elements:', dimensions)
 
         # Create 5 clusters and assign to each the same amount of elements from the data
         cluster_1, cluster_2, cluster_3, cluster_4, cluster_5 = [], [], [], [], []
         clusters = [cluster_1, cluster_2, cluster_3, cluster_4, cluster_5]
 
         cluster_list_size = row_amount//len(clusters)  # Defines how many rows can clusters hold
-        print("\nEach cluster should have this many rows put into them:", cluster_list_size)
+        print("Each cluster should have ->", cluster_list_size, "<- rows put into them.")
 
         assignment_step(stats, row_amount, col_amount, cluster_1, cluster_2, cluster_3, cluster_4,
                         cluster_5, cluster_list_size, clusters)
@@ -87,51 +86,64 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
         print("\nCluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:", cluster_3,
               "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
 
+        cluster_1trans = [list(a) for a in zip(*cluster_1)]
+        cluster_2trans = [list(a) for a in zip(*cluster_2)]
+        cluster_3trans = [list(a) for a in zip(*cluster_3)]
+        cluster_4trans = [list(a) for a in zip(*cluster_4)]
+        cluster_5trans = [list(a) for a in zip(*cluster_5)]
+        new_clusters = cluster_1trans, cluster_2trans, cluster_3trans, cluster_4trans, \
+                       cluster_5trans
+
+        centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, centroid_5trans = [], \
+                                                                                              [], \
+                                                                                              [], \
+                                                                                              [], \
+                                                                                              []
+        print("\nNEW REPRESENTATION OF CLUSTERS BY COLUMNS GROUPING:\nCluster 1:", cluster_1trans,
+              "\nCluster 2:", cluster_2trans, "\nCluster 3:", cluster_3trans,
+              "\nCluster 4:", cluster_4trans, "\nCluster 5:", cluster_5trans)
+        centroids = centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, \
+            centroid_5trans
+
+        cluster_dimension = cluster_list_size * col_amount  # 44 elements
         clust_index = 0 # Keeps rr
         sums = 0
         ind_i = 0  # every Nth element in a cluster's columns
         next_r = 0  # to keep the row number; 4 max
         limit = 0  # Keep track of "dimensions"
-        cluster_dimension = cluster_list_size * col_amount  # 44 elements
-        centroid_1, centroid_2, centroid_3, centroid_4, centroid_5 = [], [], [], [], []
-        centroids = centroid_1, centroid_2, centroid_3, centroid_4, centroid_5
         for each in centroids:
-            #cent1 = []
             which_clust = clusters[clust_index]
             which_centroid = centroids[clust_index]
             for r in which_clust:
                 for c in r:
-                    while next_r < cluster_list_size: # Cluster size is 4 in this example
+                    while next_r < cluster_list_size: # Cluster size is column amount 11
                         sums += which_clust[next_r][ind_i]
                         next_r += 1
                         limit += 1
 
                     if next_r == cluster_list_size and limit != cluster_dimension:
                     # limit's max will always be 1 less than cluster_dimensions
-                        centroid = sums/cluster_dimension
+                        centroid = sums/cluster_list_size
                         which_centroid.append(centroid)
                         sums = 0
                         next_r = 0  # Loop back through every "N"th elements .
                         ind_i += 1  # After very 4 checks, increase list index
             if next_r == cluster_list_size and limit == cluster_dimension:
-                centroid = sums/cluster_dimension
+                centroid = sums/cluster_list_size
                 which_centroid.append(centroid)
             limit = 0
             ind_i, next_r = 0, 0
             clust_index += 1
-        print("\nCentroid 1", centroid_1, "\nCentroid 2", centroid_2, "\nCentroid 3", centroid_3,
-              "\nCentroid 4", centroid_4, "\nCentroid 5", centroid_5,)
 
-        cluster_1trans = [list(a) for a in zip(*cluster_1)]
-        cluster_2trans = [list(a) for a in zip(*cluster_2)]
-        cluster_3trans = [list(a) for a in zip(*cluster_3)]
-        cluster_4trans = [list(a) for a in zip(*cluster_4)]
-        cluster_5trans = [list(a) for a in zip(*cluster_5)]
+        print("\nCentroid 1:", centroid_1trans, "\nCentroid 2", centroid_2trans, "\nCentroid 3:",
+              centroid_3trans, "\nCentroid 4:", centroid_4trans, "\nCentroid 5:", centroid_5trans)
 
-        print("\nLIST OF EACH CLUSTER'S COLUMNS\nCluster 1:", cluster_1trans, "\nCluster 2:",
-              cluster_2trans, "\nCluster 3:", cluster_3trans, "\nCluster 4:", cluster_4trans,
-              "\nCluster 5:", cluster_5trans)
         #done = False
+        #update(centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, cluster_5trans)
+
+#def update(centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, cluster_5trans)
+
+
         #iteration = 0
         # Will keep track of the cluster in "clusters" index
         # It will also be the clusters' index that needs an element
@@ -144,12 +156,5 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
         """print("\nIf any clusters were updated, this print will show their modifications:\n\n"
               "Cluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:",
               cluster_3, "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)"""
-
-
-
-        """while index < len(c_4):
-            centroid = [sum(c_4[index])/(len(c_4[0]))]
-            centroid_4cluster.append(centroid)
-            index += 1"""
 
 initialization()
