@@ -99,9 +99,9 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
                                                                                               [], \
                                                                                               [], \
                                                                                               []
-        print("\nNEW REPRESENTATION OF CLUSTERS BY COLUMNS GROUPING:\nCluster 1:", cluster_1trans,
+        """print("\nNEW REPRESENTATION OF CLUSTERS BY COLUMNS GROUPING:\nCluster 1:", cluster_1trans,
               "\nCluster 2:", cluster_2trans, "\nCluster 3:", cluster_3trans,
-              "\nCluster 4:", cluster_4trans, "\nCluster 5:", cluster_5trans)
+              "\nCluster 4:", cluster_4trans, "\nCluster 5:", cluster_5trans)"""
         centroids = centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, \
             centroid_5trans
 
@@ -139,22 +139,65 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
               centroid_3trans, "\nCentroid 4:", centroid_4trans, "\nCentroid 5:", centroid_5trans)
 
         #done = False
-        #update(centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, cluster_5trans)
+        update_step(clusters, centroids, col_amount, cluster_list_size)  # Old clusters, lists' sizes (11)
+        # and centroid from transposed rows/columns
 
-#def update(centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, cluster_5trans)
+
+def update_step(clusters, centroids, col_amount, cluster_list_size):
+        """Get the distance in between a cluster's list elements and each centroid"""
+
+        row_in_clust = 0  # Track the list in cluster's indices
+
+        centroid_num = 0 # Will know which centroid element to compare distances with
+        which_centroid = centroids[centroid_num]
+        element_num = 0  # Will keep of the element in centroid
+        while row_in_clust <= cluster_list_size:  # While still in the same cluster
+            which_clusters = clusters[row_in_clust]
+
+            for cluster_row in which_clusters:  # Sees one list per cluster at a time
+                print(cluster_row)
+
+                for element in cluster_row:  # Sees one element at a time
+                    print(element)
+                    print("centroid element number", element_num)
+                    if element_num == col_amount:
+                        element_num = 0
+                    if element_num < col_amount:
+                        element_num += 1
+                #print(element_num)
+                element_num = 0  # Reset element number
+
+            row_in_clust += 1  # Once all items are seen, change cluster
 
 
-        #iteration = 0
-        # Will keep track of the cluster in "clusters" index
-        # It will also be the clusters' index that needs an element
-        """while done:
-            for cluster in clusters:    # Search to see if any cluster was left empty
+        """for each in centroids:
+            which_clust = clusters[clust_index]
+            which_centroid = centroids[clust_index]
+            for r in which_clust:
+                for c in r:
+                    while next_r < cluster_list_size: # Cluster size is column amount 11
+                        #difference = abs(which_clust[ind_i] - which_centroid[ind_i])
+                        sums += which_clust[next_r][ind_i]
+                        next_r += 1
+                        limit += 1
 
-                    # Cluster that is losing a row
-                    iteration += 1  # There are only 5 clusters so it won't go beyond scope
-                done = True"""
-        """print("\nIf any clusters were updated, this print will show their modifications:\n\n"
-              "Cluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:",
-              cluster_3, "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)"""
+                    if next_r == cluster_list_size and limit != cluster_dimension:
+                    # limit's max will always be 1 less than cluster_dimensions
+                        #difference = abs(which_clust[ind_i] - which_centroid[ind_i])
+                        centroid = sums/cluster_list_size
+                        which_centroid.append(centroid)
+                        sums = 0
+                        next_r = 0  # Loop back through every "N"th elements .
+                        ind_i += 1  # After very 4 checks, increase list index
+
+                        sums = 0
+                        next_r = 0  # Loop back through every "N"th elements .
+                        ind_i += 1  # After very 4 checks, increase list index
+            if next_r == cluster_list_size and limit == cluster_dimension:
+                centroid = sums#/cluster_list_size
+                which_centroid.append(centroid)
+            limit, ind_i, next_r = 0, 0, 0
+            clust_index += 1"""
+
 
 initialization()
