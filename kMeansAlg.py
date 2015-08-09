@@ -87,12 +87,9 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
         print("\nCluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:", cluster_3,
               "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
 
-        #update_centroids(clusters, cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 
-
-#def update_centroids
         clust_index = 0 # Keeps rr
-        sum = 0
+        sums = 0
         ind_i = 0  # every Nth element in a cluster's columns
         next_r = 0  # to keep the row number; 4 max
         limit = 0  # Keep track of "dimensions"
@@ -106,19 +103,19 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
             for r in which_clust:
                 for c in r:
                     while next_r < cluster_list_size: # Cluster size is 4 in this example
-                        sum += which_clust[next_r][ind_i]
+                        sums += which_clust[next_r][ind_i]
                         next_r += 1
                         limit += 1
 
                     if next_r == cluster_list_size and limit != cluster_dimension:
                     # limit's max will always be 1 less than cluster_dimensions
-                        centroid = sum#/cluster_dimension
+                        centroid = sums/cluster_dimension
                         which_centroid.append(centroid)
-                        sum = 0
+                        sums = 0
                         next_r = 0  # Loop back through rows til every Nth elements find its centroid
                         ind_i += 1  # After very 4 checks, increase list index
             if next_r == cluster_list_size and limit == cluster_dimension:
-                centroid = sum#/cluster_dimension
+                centroid = sums/cluster_dimension
                 which_centroid.append(centroid)
             limit = 0
             ind_i, next_r = 0, 0
