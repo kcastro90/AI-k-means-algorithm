@@ -11,7 +11,7 @@ def initialization():
     try:
         reader = csv.reader(csv_file)
         next(reader)    # Skip headers.
-        stats = [[int(item) for number, item in enumerate(row) if item and (1 <= number <= 100)] 
+        stats = [[int(item) for number, item in enumerate(row) if item and (1 <= number <= 100)]
                  for row in reader]   # Converts string into int
         """The maximum number of rows for this program is 100"""
         print("\nDATA RETRIEVED:\n", stats)
@@ -30,18 +30,18 @@ def initialization():
         cluster_1, cluster_2, cluster_3, cluster_4, cluster_5 = [], [], [], [], []
         clusters = [cluster_1, cluster_2, cluster_3, cluster_4, cluster_5]
 
-        cluster_list_size = row_amount//len(clusters)  # Defines how many rows can each cluster have.
+        cluster_list_size = row_amount//len(clusters)  # Defines how many rows can clusters hold
         print("\nEach cluster should have this many rows put into them:", cluster_list_size)
 
-        assignment_step(stats, row_amount, cluster_1, cluster_2, cluster_3, cluster_4, cluster_5,
-                        cluster_list_size, clusters)
+        assignment_step(stats, row_amount, col_amount, cluster_1, cluster_2, cluster_3, cluster_4,
+                        cluster_5, cluster_list_size, clusters)
 
     finally:
         csv_file.close()
 
 
-def assignment_step(stats, row_amount, cluster_1, cluster_2, cluster_3, cluster_4, cluster_5,
-                    cluster_list_size, clusters):
+def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_3, cluster_4,
+                    cluster_5, cluster_list_size, clusters):
 
         done = False
         index = 0
@@ -87,105 +87,69 @@ def assignment_step(stats, row_amount, cluster_1, cluster_2, cluster_3, cluster_
         print("\nCluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:", cluster_3,
               "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
 
-        update_centroids(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
+        clust_index = 0 # Keeps rr
+        sums = 0
+        ind_i = 0  # every Nth element in a cluster's columns
+        next_r = 0  # to keep the row number; 4 max
+        limit = 0  # Keep track of "dimensions"
+        cluster_dimension = cluster_list_size * col_amount  # 44 elements
+        centroid_1, centroid_2, centroid_3, centroid_4, centroid_5 = [], [], [], [], []
+        centroids = centroid_1, centroid_2, centroid_3, centroid_4, centroid_5
+        for each in centroids:
+            #cent1 = []
+            which_clust = clusters[clust_index]
+            which_centroid = centroids[clust_index]
+            for r in which_clust:
+                for c in r:
+                    while next_r < cluster_list_size: # Cluster size is 4 in this example
+                        sums += which_clust[next_r][ind_i]
+                        next_r += 1
+                        limit += 1
 
-        done = False
-        iteration = 0
+                    if next_r == cluster_list_size and limit != cluster_dimension:
+                    # limit's max will always be 1 less than cluster_dimensions
+                        centroid = sums/cluster_dimension
+                        which_centroid.append(centroid)
+                        sums = 0
+                        next_r = 0  # Loop back through every "N"th elements .
+                        ind_i += 1  # After very 4 checks, increase list index
+            if next_r == cluster_list_size and limit == cluster_dimension:
+                centroid = sums/cluster_dimension
+                which_centroid.append(centroid)
+            limit = 0
+            ind_i, next_r = 0, 0
+            clust_index += 1
+        print("\nCentroid 1", centroid_1, "\nCentroid 2", centroid_2, "\nCentroid 3", centroid_3,
+              "\nCentroid 4", centroid_4, "\nCentroid 5", centroid_5,)
+
+        cluster_1trans = [list(a) for a in zip(*cluster_1)]
+        cluster_2trans = [list(a) for a in zip(*cluster_2)]
+        cluster_3trans = [list(a) for a in zip(*cluster_3)]
+        cluster_4trans = [list(a) for a in zip(*cluster_4)]
+        cluster_5trans = [list(a) for a in zip(*cluster_5)]
+
+        print("\nLIST OF EACH CLUSTER'S COLUMNS\nCluster 1:", cluster_1trans, "\nCluster 2:",
+              cluster_2trans, "\nCluster 3:", cluster_3trans, "\nCluster 4:", cluster_4trans,
+              "\nCluster 5:", cluster_5trans)
+        #done = False
+        #iteration = 0
         # Will keep track of the cluster in "clusters" index
         # It will also be the clusters' index that needs an element
-
-        while done:
+        """while done:
             for cluster in clusters:    # Search to see if any cluster was left empty
-                if len(cluster) == 0:   # If an empty one is found
-                    print("iteration", iteration)
-                    which_cluster = random.randint(0, 4)
-                    print("Which cluster:", which_cluster)
-                    # Randomly picks a new cluster index
-                    giving_cluster = clusters[which_cluster]
-                    print("Giving cluster:", giving_cluster)
-                    # Checks if cluster that is going to give a row is not this empty one
-                    if (cluster != giving_cluster) and (len(giving_cluster) > 1):
-                        # Row index from cluster
-                        index_for_row = random.randint(0, len(giving_cluster))
-                        print("Which row index from cluster:", index_for_row)
-                        new_row_elements = giving_cluster[index_for_row]  # Row that is being taken
-                        print("New row's elements", new_row_elements)
-                        # Find and assign clusters
-
-                        # Cluster being added options
-                        if iteration == 0:
-                            cluster_1.append(new_row_elements)
-                        if iteration == 1:
-                            cluster_2.append(new_row_elements)
-                        if iteration == 2:
-                            cluster_3.append(new_row_elements)
-                        if iteration == 3:
-                            cluster_4.append(new_row_elements)
-                        if iteration == 4:
-                            cluster_5.append(new_row_elements)
-                        print(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
-
-                        if which_cluster == 4:
-                            cluster_1.remove(index_for_row)
-                        if which_cluster == 1:
-                            cluster_2.remove(index_for_row)
-                        if which_cluster == 2:
-                            cluster_3.remove(index_for_row)
-                        if which_cluster == 3:
-                            cluster_4.remove(index_for_row)
-                        if which_cluster == 4:
-                            cluster_5.remove(index_for_row)
 
                     # Cluster that is losing a row
                     iteration += 1  # There are only 5 clusters so it won't go beyond scope
-                done = True
-        print("\nIf any clusters were updated, this print will show their modifications:\n\n"
+                done = True"""
+        """print("\nIf any clusters were updated, this print will show their modifications:\n\n"
               "Cluster 1:", cluster_1, "\nCluster 2:", cluster_2, "\nCluster 3:",
-              cluster_3, "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)
-
-        # After no empty clusters are left update the centroids
-        update_centroids(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
+              cluster_3, "\nCluster 4:", cluster_4, "\nCluster 5:", cluster_5)"""
 
 
-def update_centroids(c_1, c_2, c_3, c_4, c_5):
-    centroid_1cluster, centroid_2cluster, centroid_3cluster, centroid_4cluster, \
-        centroid_5cluster = [], [], [], [], []
-    index = 0
 
-    # Makes sure no cluster is empty before beginning the update step.
-    if len(c_1) or len(c_2) or len(c_3) or len(c_4) or len(c_5) != 0:
-        # Check if any of the clusters are empty.
-        # print("Length for each cluster:",len(c_1), len(c_2), len(c_3), len(c_4), len(c_5))
-
-        while index < len(c_1):
-            centroid = [sum(c_1[index])/(len(c_1[0]))]
-            centroid_1cluster.append(centroid)
-            index += 1
-        index = 0
-        print("\nThe centroids for Cluster 1:", centroid_1cluster)
-        while index < len(c_2):
-            centroid = [sum(c_2[index])/(len(c_2[0]))]
-            centroid_2cluster.append(centroid)
-            index += 1
-        index = 0   # Reset index to 0
-        print("The centroids for Cluster 2:", centroid_2cluster)
-        while index < len(c_3):
-            centroid = [sum(c_3[index])/(len(c_3[0]))]
-            centroid_3cluster.append(centroid)
-            index += 1
-        index = 0   # Reset index to 0
-        print("The centroids for Cluster 3:", centroid_3cluster)
-        while index < len(c_4):
+        """while index < len(c_4):
             centroid = [sum(c_4[index])/(len(c_4[0]))]
             centroid_4cluster.append(centroid)
-            index += 1
-        index = 0   # Reset index to 0
-        print("The centroids for Cluster 4:", centroid_4cluster)
-        while index < len(c_5):
-            centroid = [sum(c_5[index])/(len(c_5[0]))]
-            centroid_5cluster.append(centroid)
-            index += 1
-        print("The centroids for Cluster 5:", centroid_5cluster)
-
+            index += 1"""
 
 initialization()
