@@ -39,7 +39,7 @@ def initialization():
         csv_file.close()
 
 
-def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_3, cluster_4,
+def assignment_step(stats, row_amount, col_amount, cluster_1, cluster_2, cluster_3, cluster_4,
                     cluster_5, cluster_list_size, clusters):
 
         done = False
@@ -92,7 +92,7 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
         cluster_4trans = [list(a) for a in zip(*cluster_4)]
         cluster_5trans = [list(a) for a in zip(*cluster_5)]
         new_clusters = cluster_1trans, cluster_2trans, cluster_3trans, cluster_4trans, \
-                       cluster_5trans
+            cluster_5trans
 
         centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, centroid_5trans = [], \
                                                                                               [], \
@@ -135,7 +135,7 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
             ind_i, next_r = 0, 0
             clust_index += 1
 
-        print("\nCentroid 1:", centroid_1trans, "\nCentroid 2", centroid_2trans, "\nCentroid 3:",
+        print("\nCentroid 1:", centroid_1trans, "\nCentroid 2:", centroid_2trans, "\nCentroid 3:",
               centroid_3trans, "\nCentroid 4:", centroid_4trans, "\nCentroid 5:", centroid_5trans)
 
         #done = False
@@ -184,8 +184,29 @@ def update_step(clusters, centroids, col_amount, cluster_list_size):
 
         min_val, index = min((min_val, index) for (index, min_val) in enumerate(diff_array))
         print("Minimum value", min_val, "found at index:", index)
+        chng_clust, new_index = get_cluster_and_index(min_val, index)
+
+        print("\nChanging cluster:", chng_clust, "\nIndex", new_index)
 
 
+def get_cluster_and_index(cluster, index):
+
+    if 0 <= index <= 3:
+        cluster = 0
+        # index stays itself
+    if 4 <= index <= 8:
+        cluster = 1
+        index %= 2
+    if 9 <= index <= 12:
+        cluster = 2
+        index %= 3
+    if 13 <= index <= 16:
+        cluster = 3
+        index %= 4
+    if 17 <= index <= 20:
+        cluster = 4
+        index %= 5
+    return cluster, index
 
 
 initialization()
