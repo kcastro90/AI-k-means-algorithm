@@ -99,9 +99,9 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
                                                                                               [], \
                                                                                               [], \
                                                                                               []
-        """print("\nNEW REPRESENTATION OF CLUSTERS BY COLUMNS GROUPING:\nCluster 1:", cluster_1trans,
+        print("\nNEW REPRESENTATION OF CLUSTERS BY COLUMNS GROUPING:\nCluster 1:", cluster_1trans,
               "\nCluster 2:", cluster_2trans, "\nCluster 3:", cluster_3trans,
-              "\nCluster 4:", cluster_4trans, "\nCluster 5:", cluster_5trans)"""
+              "\nCluster 4:", cluster_4trans, "\nCluster 5:", cluster_5trans)
         centroids = centroid_1trans, centroid_2trans, centroid_3trans, centroid_4trans, \
             centroid_5trans
 
@@ -139,40 +139,52 @@ def assignment_step(stats, row_amount,col_amount, cluster_1, cluster_2, cluster_
               centroid_3trans, "\nCentroid 4:", centroid_4trans, "\nCentroid 5:", centroid_5trans)
 
         #done = False
-        update_step(clusters, centroids, col_amount, cluster_list_size)  # Old clusters, lists' sizes (11)
-        # and centroid from transposed rows/columns
+        update_step(clusters, centroids, col_amount, cluster_list_size)  # Old clusters,
+        # lists' sizes (11) and centroid from transposed rows/columns
 
 
 def update_step(clusters, centroids, col_amount, cluster_list_size):
         """Get the distance in between a cluster's list elements and each centroid"""
 
-        dif_array = []
+        diff_array = []
         row_in_clust = 0  # Track the list in cluster's indices
 
-        centroid_num = 0 # Will know which centroid element to compare distances with
+        centroid_num = 0  # Will know which centroid element to compare distances with
         which_centroid = centroids[centroid_num]
         element_num = 0  # Will keep of the element in centroid
+        sum_differences = 0
+
+        print("\nThe centroid that all cluster elements will check their distances "
+              "with will be:\n", which_centroid)
         while row_in_clust <= cluster_list_size:  # While still in the same cluster
             which_clusters = clusters[row_in_clust]
 
             for cluster_row in which_clusters:  # Sees one list per cluster at a time
-                print(cluster_row, "\n", which_centroid)
+                #print(cluster_row, "\n", which_centroid)
 
                 for element in cluster_row:  # Sees one element at a time
                     difference = abs(element - which_centroid[element_num])
-                    distance = dif_array.append(difference)
-                    print(difference)
+                    sum_differences += difference
                     # print("centroid element number", element_num)
                     if element_num < col_amount:
                         element_num += 1
+                #print(sum_differences)
+                diff_array.append(sum_differences)
+                sum_differences = 0
                 #print(element_num)
                 element_num = 0  # Reset element number
-                #print(difference)
-            if centroid_num < 4:
+            if centroid_num < 4:  # Used to change cluster
                 centroid_num += 1
-            # print("Which centroids[] it is looking at", centroid_num)
+            #print("Which centroids[] it is looking at", centroid_num)
 
             row_in_clust += 1  # Once all items are seen, change cluster
+
+        print("The calculated distances from each cluster's columns to their corresponding"
+              " centroids:\n", diff_array)
+
+        min_val, index = min((min_val, index) for (index, min_val) in enumerate(diff_array))
+        print("Minimum value", min_val, "found at index:", index)
+
 
 
 
