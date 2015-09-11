@@ -1,5 +1,5 @@
 # AI-k-means-algorithm
-    This program reads a csv file, while ignoring all labels and only considering its values to retrieve some statistics. 
+    This program reads a csv file (simple-soccer-database.csv), while ignoring all labels and only considering the numerical values to retrieve some statistics. 
 Each row of elements are divided into five randomly arranged clusters, each containing the same amount of rows. 
     It was supposed to simulate an Random K-Means Algorithm. The rows/lists in each cluster is transposed so that each "nth" 
 element, or column n of each row/list, can be grouped and have its centroid defined.
